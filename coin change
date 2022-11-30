@@ -1,0 +1,46 @@
+#include<stdio.h>
+int min(int a,int b)
+{
+if (a<b)
+return a;
+else
+return b;
+}
+
+int coinChange(int* coins, int coinsSize, int amount){
+int array[amount+1];
+array[0]=0;
+for(int i=1;i<amount+1;i++)
+{
+array[i]=amount+1;
+}
+for(int i=1;i<amount+1;i++)
+{
+for(int j=0;j<coinsSize;j++)
+{
+if(coins[j]<=i)
+{
+array[i]=min(array[i],1+array[i-coins[j]]);
+}
+}
+}
+if(array[amount]==amount+1)
+return -1;
+else
+return array[amount];
+
+}
+int main()
+{
+    int coins[10],coinsSize,amount,fc;
+    printf("enter size of coins:");
+    scanf("%d",&coinsSize);
+    printf("enter elements in coins:");
+    for(int i=0;i<coinsSize;i++)
+    scanf("%d",&coins[i]);
+    printf("enter amount:");
+    scanf("%d",&amount);
+    fc=coinChange(coins,coinsSize,amount);
+    printf("fewest number of coins that you need to make up that amount\n");
+    printf("%d\n",fc);
+}
